@@ -1,0 +1,213 @@
+[
+  {
+    "name": "Food & Dining",
+    "subcategories": [
+      { "name": "Restaurants" },
+      { "name": "Cafes" },
+      { "name": "Tea Shops" },
+      { "name": "Fast Food" },
+      { "name": "Bakeries" },
+      { "name": "Street Food" },
+      { "name": "Bars & Pubs" },
+      { "name": "Catering" },
+      { "name": "Food Delivery" }
+    ]
+  },
+  {
+    "name": "Hotels & Travel",
+    "subcategories": [
+      { "name": "Hotels" },
+      { "name": "Resorts" },
+      { "name": "Guesthouses" },
+      { "name": "Hostels" },
+      { "name": "Travel Agencies" },
+      { "name": "Tour Operators" },
+      { "name": "Car Rental" },
+      { "name": "Motorbike Rental" },
+      { "name": "Tourist Attractions" }
+    ]
+  },
+  {
+    "name": "Shopping & Retail",
+    "subcategories": [
+      { "name": "Supermarkets" },
+      { "name": "Convenience Stores" },
+      { "name": "Clothing" },
+      { "name": "Shoes & Bags" },
+      { "name": "Electronics" },
+      { "name": "Mobile Phones" },
+      { "name": "Computer Shops" },
+      { "name": "Furniture" },
+      { "name": "Cosmetics & Beauty Products" },
+      { "name": "Jewelry" }
+    ]
+  },
+  {
+    "name": "Health & Medical",
+    "subcategories": [
+      { "name": "Hospitals" },
+      { "name": "Clinics" },
+      { "name": "Dental Clinics" },
+      { "name": "Pharmacies" },
+      { "name": "Laboratories" },
+      { "name": "Eye Clinics" },
+      { "name": "Physiotherapy" },
+      { "name": "Medical Equipment" }
+    ]
+  },
+  {
+    "name": "Beauty & Personal Care",
+    "subcategories": [
+      { "name": "Hair Salons" },
+      { "name": "Beauty Salons" },
+      { "name": "Barbers" },
+      { "name": "Spas" },
+      { "name": "Massage" },
+      { "name": "Nail Salons" },
+      { "name": "Makeup Artists" }
+    ]
+  },
+  {
+    "name": "Automotive",
+    "subcategories": [
+      { "name": "Car Dealers" },
+      { "name": "Motorcycle Dealers" },
+      { "name": "Auto Repair" },
+      { "name": "Motorcycle Repair" },
+      { "name": "Car Wash" },
+      { "name": "Tire Shops" },
+      { "name": "Spare Parts" },
+      { "name": "Car Accessories" },
+      { "name": "Driving Schools" }
+    ]
+  },
+  {
+    "name": "Home & Construction",
+    "subcategories": [
+      { "name": "Construction Companies" },
+      { "name": "Contractors" },
+      { "name": "Architects" },
+      { "name": "Interior Design" },
+      { "name": "Furniture" },
+      { "name": "Hardware Stores" },
+      { "name": "Plumbing" },
+      { "name": "Electrical Services" },
+      { "name": "Painting" },
+      { "name": "Real Estate" }
+    ]
+  },
+  {
+    "name": "Business & Professional Services",
+    "subcategories": [
+      { "name": "Accounting" },
+      { "name": "Lawyers" },
+      { "name": "Insurance" },
+      { "name": "Banks & Financial Services" },
+      { "name": "Marketing Agencies" },
+      { "name": "IT Services" },
+      { "name": "Printing" },
+      { "name": "Advertising" },
+      { "name": "Recruitment" },
+      { "name": "Consulting" }
+    ]
+  },
+  {
+    "name": "Education",
+    "subcategories": [
+      { "name": "Schools" },
+      { "name": "Universities" },
+      { "name": "Private Tutors" },
+      { "name": "Language Schools" },
+      { "name": "Computer Training" },
+      { "name": "Vocational Training" },
+      { "name": "Driving Schools" },
+      { "name": "Online Courses" }
+    ]
+  },
+  {
+    "name": "Technology",
+    "subcategories": [
+      { "name": "Software Companies" },
+      { "name": "Web Development" },
+      { "name": "Mobile App Development" },
+      { "name": "Computer Repair" },
+      { "name": "Phone Repair" },
+      { "name": "Internet Service Providers" },
+      { "name": "IT Training" },
+      { "name": "Cybersecurity" }
+    ]
+  },
+  {
+    "name": "Transportation & Delivery",
+    "subcategories": [
+      { "name": "Taxi" },
+      { "name": "Bus Services" },
+      { "name": "Trucking" },
+      { "name": "Courier Services" },
+      { "name": "Moving Services" },
+      { "name": "Logistics" },
+      { "name": "Food Delivery" },
+      { "name": "Warehousing" }
+    ]
+  },
+  {
+    "name": "Events & Entertainment",
+    "subcategories": [
+      { "name": "Event Planners" },
+      { "name": "Wedding Services" },
+      { "name": "Photography" },
+      { "name": "Videography" },
+      { "name": "Karaoke" },
+      { "name": "Gaming" },
+      { "name": "Cinemas" },
+      { "name": "Music" },
+      { "name": "Party & Event Venues" }
+    ]
+  },
+  {
+    "name": "Agriculture",
+    "subcategories": [
+      { "name": "Agricultural Suppliers" },
+      { "name": "Seeds" },
+      { "name": "Fertilizer" },
+      { "name": "Pesticides" },
+      { "name": "Farm Equipment" },
+      { "name": "Livestock" },
+      { "name": "Animal Feed" },
+      { "name": "Agricultural Services" }
+    ]
+  },
+  {
+    "name": "Pets & Animals",
+    "subcategories": [
+      { "name": "Pet Shops" },
+      { "name": "Veterinary Clinics" },
+      { "name": "Pet Grooming" },
+      { "name": "Pet Boarding" },
+      { "name": "Animal Feed" }
+    ]
+  },
+  {
+    "name": "Household Services",
+    "subcategories": [
+      { "name": "Cleaning Services" },
+      { "name": "Laundry" },
+      { "name": "Pest Control" },
+      { "name": "Security Services" },
+      { "name": "Electricians" },
+      { "name": "Plumbers" },
+      { "name": "Repair Services" }
+    ]
+  },
+  {
+    "name": "Government & Public Services",
+    "subcategories": [
+      { "name": "Government Offices" },
+      { "name": "Municipal Services" },
+      { "name": "Post Offices" },
+      { "name": "Public Transportation" },
+      { "name": "Emergency Services" },
+      { "name": "Community Organizations" }
+    ]
+  }
+]
