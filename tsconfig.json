@@ -1,16 +1,15 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "ES2022",
     "module": "nodenext",
+    "moduleResolution": "nodenext",
     "rewriteRelativeImportExtensions": true,
     "verbatimModuleSyntax": true,
     "noEmit": false,
     "strict": true,
     "skipLibCheck": true,
-    "moduleResolution": "node16",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "esModuleInterop": true,
     "outDir": "./dist",
     "rootDir": "./src"
   },
