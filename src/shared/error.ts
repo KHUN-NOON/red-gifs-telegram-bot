@@ -1,5 +1,3 @@
-import logger from "../configs/logger.ts";
-
 export class AppError extends Error {
   constructor(
     msg: string,

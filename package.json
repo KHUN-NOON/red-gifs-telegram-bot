@@ -1,5 +1,5 @@
 {
-  "name": "express-telegram-bot",
+  "name": "red-gifs-telegram-bot",
   "version": "1.0.0",
   "description": "\"This is the experimental projects to connect telegram bot with express app\"",
   "main": "src/index.ts",

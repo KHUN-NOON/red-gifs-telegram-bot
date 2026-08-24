@@ -11,19 +11,19 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
-
-model Categories {
+model RedGifSession {
   id String @id @default(uuid())
-  name String @unique
+  token String @db.Text
+  
+  @@map("red_gif_sessions")
+}
 
-  parentId String?
+model PublishedVideo {
+  id String @id @default(uuid())
+  gifId String @map("gif_id")
+  sdUrl String @map("sd_url")
+  hdUrl String @map("hd_url")
+  description String? 
 
-  parent  Categories?  @relation("CategoryToSubcategory", fields: [parentId], references: [id])
-  subcategories Categories[] @relation("CategoryToSubcategory")
-
-  createdAt DateTime @map("created_at") @default(now())
-  updatedAt DateTime? @map("updated_at")
-
-  @@index([name])
-  @@map("categories")
+  @@map("published_videos")
 }
