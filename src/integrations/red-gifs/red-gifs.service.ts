@@ -4,7 +4,7 @@ import logger from "../../configs/logger.ts";
 import type { VideoItem } from "./red-gifs.types.ts";
 import type { PrismaClient } from "../../generated/prisma/client.ts";
 import { TOKENS } from "../../configs/di/tokens.ts";
-import { sleep } from "../../shared/utils.ts";
+import { escapeHtml, formatTags, sleep, truncate } from "../../shared/utils.ts";
 
 const authService = ApiAuthService.getInstance();
 
@@ -19,7 +19,7 @@ export class RedGifsService {
     const token = await authService.getValidToken();
     const url = process.env.RED_GIFS_API;
     const response = await fetch(
-      `${url}/feeds/trending/popular?page=1&count=20`,
+      `${url}/feeds/trending/popular?page=1&count=10`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -95,9 +95,13 @@ export class RedGifsService {
             },
           });
           console.log(`[Cron] Successfully processed video ID: ${video.id}`);
+        } else {
+          console.warn(
+            `[Cron] Failed to send video ID: ${video.id}. Skipping DB record.`,
+          );
         }
 
-        await sleep(2000);
+        await sleep(3500);
       }
     } catch (error) {
       console.error("[Cron Job Error]:", error);
@@ -108,25 +112,141 @@ export class RedGifsService {
     const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
     const TELEGRAM_CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID;
 
-    const tags = video.tags.map((item) => `#${item}`).join(" ");
-
-    const res = await fetch(
-      `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendVideo`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHANNEL_ID,
-          video: video.urls.hd,
-          caption: `<b>${video.description}\n</b> <b>@${video.userName}</b> ${tags}`,
-          parse_mode: "HTML",
-          supports_streaming: true,
-          protect_content: true,
-        }),
-      },
+    const tags = formatTags(video.tags);
+    const desc = escapeHtml(
+      video.description ?? video.contentType ?? "No Description",
     );
+    const user = escapeHtml(video.userName ?? "");
 
-    const data = await res.json();
-    return data.ok;
+    const rawCaption = `<b>${desc}</b>\n<b>@${user}</b>\n\n${tags}`;
+    const caption = truncate(rawCaption, 1020);
+
+    const videoUrl = video.urls.sd;
+
+    if (!videoUrl) {
+      console.error(`[Telegram] No valid video URL for ID: ${video.id}`);
+      return false;
+    }
+    console.log([video.id, videoUrl]);
+    try {
+      const res = await fetch(
+        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendVideo`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHANNEL_ID,
+            video: videoUrl,
+            caption,
+            parse_mode: "HTML",
+            supports_streaming: true,
+            protect_content: true,
+          }),
+        },
+      );
+
+      const data = await res.json();
+
+      if (!data.ok) {
+        console.error(`[Telegram API Error for Video ${video.id}]:`, data);
+
+        // Handle flood limit dynamically if triggered
+        if (data.error_code === 429 && data.parameters?.retry_after) {
+          const waitTime = (data.parameters.retry_after + 1) * 1000;
+          console.warn(
+            `[Telegram] Rate limited. Waiting ${waitTime / 1000}s...`,
+          );
+          await sleep(waitTime);
+        }
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error(`[Network Error for Video ${video.id}]:`, error);
+      return false;
+    }
   }
+
+  //   async sendVideoToTelegram(video: VideoItem): Promise<boolean> {
+  //     const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+  //     const TELEGRAM_CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID;
+
+  //     const tags = formatTags(video.tags);
+  //     const desc = escapeHtml(
+  //       video.description ?? video.contentType ?? "No Description",
+  //     );
+  //     const user = escapeHtml(video.userName ?? "");
+  //     const caption = truncate(
+  //       `<b>${desc}</b>\n<b>@${user}</b>\n\n${tags}`,
+  //       1020,
+  //     );
+
+  //     const videoUrl = video.urls.hd || video.urls.sd;
+  //     if (!videoUrl) {
+  //       console.error(`[Telegram] No valid video URL for ID: ${video.id}`);
+  //       return false;
+  //     }
+
+  //     try {
+  //       // 1. Download video binary to your server
+  //       const videoFetchRes = await fetch(videoUrl, {
+  //         headers: {
+  //           "User-Agent": "Mozilla/5.0 (compatible; Bot/1.0)",
+  //           // Pass bearer auth if RedGifs requires token to access media stream:
+  //           //   ...(this.cache?.token
+  //           //     ? { Authorization: `Bearer ${this.cache.token}` }
+  //           //     : {}),
+  //         },
+  //       });
+
+  //       if (!videoFetchRes.ok) {
+  //         console.error(
+  //           `[CDN Error] Failed to download video binary (${video.id}): HTTP ${videoFetchRes.status}`,
+  //         );
+  //         return false;
+  //       }
+
+  //       const videoBuffer = await videoFetchRes.arrayBuffer();
+  //       const videoBlob = new Blob([videoBuffer], { type: "video/mp4" });
+  //       // 2. Build multipart/form-data body
+  //       const formData = new FormData();
+  //       formData.append("chat_id", TELEGRAM_CHANNEL_ID!);
+  //       formData.append("video", videoBlob, `${video.id}.mp4`);
+  //       formData.append("caption", caption);
+  //       formData.append("parse_mode", "HTML");
+  //       formData.append("supports_streaming", "true");
+  //       formData.append("protect_content", "true");
+
+  //       console.log(`Sending video: ${video.id} to Telegram...`);
+  //       // 3. Post binary stream to Telegram
+  //       const res = await fetch(
+  //         `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendVideo`,
+  //         {
+  //           method: "POST",
+  //           body: formData, // native fetch sets multipart/form-data boundary automatically
+  //         },
+  //       );
+
+  //       const data = await res.json();
+
+  //       if (!data.ok) {
+  //         console.error(`[Telegram API Error for Video ${video.id}]:`, data);
+
+  //         if (data.error_code === 429 && data.parameters?.retry_after) {
+  //           const waitTime = (data.parameters.retry_after + 1) * 1000;
+  //           console.warn(
+  //             `[Telegram] Rate limited. Waiting ${waitTime / 1000}s...`,
+  //           );
+  //           await sleep(waitTime);
+  //         }
+  //         return false;
+  //       }
+
+  //       return true;
+  //     } catch (err) {
+  //       console.error(`[Upload Error for Video ${video.id}]:`, err);
+  //       return false;
+  //     }
+  //   }
 }

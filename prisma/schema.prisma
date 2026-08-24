@@ -25,5 +25,6 @@ model PublishedVideo {
   hdUrl String @map("hd_url")
   description String? 
 
+  @@index([gifId])
   @@map("published_videos")
 }

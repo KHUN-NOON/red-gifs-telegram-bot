@@ -48,13 +48,11 @@ export class ApiAuthService {
   private async fetchNewToken(): Promise<string | null> {
     const url = process.env.RED_GIFS_API;
     const response = await fetch(`${url}/auth/temporary`, {
-      method: "POST",
+      method: "GET",
       headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({
-      //     clientId: process.env.API_CLIENT_ID,
-      //     clientSecret: process.env.API_CLIENT_SECRET,
-      //   }),
     });
+
+    console.log("res: ", response);
 
     if (!response.ok) {
       throw new Error(`Auth failed with status: ${response.status}`);
