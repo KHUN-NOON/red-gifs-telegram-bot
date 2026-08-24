@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import "tsyringe";
 import app from "./app.ts";
 import { env } from "./configs/env.ts";
 import "./configs/di/container.ts";
