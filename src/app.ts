@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import "./configs/di/container.ts";
 import express, { type Express } from "express";
 import cors from "cors";
 import rootRouter from "./routes/index.ts";
