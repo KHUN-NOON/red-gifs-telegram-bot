@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import { container } from "tsyringe";
 import type { PrismaClient } from "../../generated/prisma/client.ts";
 import { TOKENS } from "./tokens.ts";

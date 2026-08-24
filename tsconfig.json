@@ -4,13 +4,17 @@
     "module": "nodenext",
     "rewriteRelativeImportExtensions": true,
     "verbatimModuleSyntax": true,
-    "noEmit": true,
+    "noEmit": false,
     "strict": true,
     "skipLibCheck": true,
     "moduleResolution": "node16",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "types": ["reflect-metadata"]
   },
-  "include": ["src/**/*.ts", "master_data", "*.ts"]
+  "include": ["src/**/*.ts", "master_data"],
+  "exclude": ["dist", "node_modules", "prisma.config.ts"]
 }

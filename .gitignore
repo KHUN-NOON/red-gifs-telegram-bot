@@ -4,6 +4,7 @@ node_modules
 
 /src/generated/prisma
 /src/test-scripts
+dist
 
 .agents
 .windsurf
