@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "test": "node test",
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "postinstall": "prisma generate",
+    "build": "prisma generate && prisma migrate && tsc",
+    "start": "node dist/index.js"
   },
   "author": "",
   "license": "ISC",
