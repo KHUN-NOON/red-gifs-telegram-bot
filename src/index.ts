@@ -1,4 +1,4 @@
-import "reflect-metadata";
+require("reflect-metadata");
 import app from "./app.ts";
 import { env } from "./configs/env.ts";
 import "./configs/di/container.ts";
