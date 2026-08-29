@@ -113,7 +113,7 @@ export class RedGifsService {
     const url = process.env.RED_GIFS_API;
     // niches/search?order=best_match&page=1&query=asia
     const response = await fetch(
-      `${url}/niches/search?order=best_match&page=1&query=asia&count=10`,
+      `${url}/niches/asian-femdom/gifs?count=10&page=1&order=hot`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
